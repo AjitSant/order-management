@@ -1,0 +1,93 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12" [formGroup]="orderForm">
+      <button type="button" class="btn btn-primary my-3" (click)='createOrder()'>CREATE ORDER</button>
+      <table class="table">
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+          <th>Description</th>
+          <th>Category</th>
+          <th>Brand</th>
+          <th>Model</th>
+          <th>Qty</th>
+          <th>MRP</th>
+          <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody formArrayName="lessons">
+          <ng-container *ngFor="let order of orderData; let i=index">
+            <tr [formGroupName]="i">
+              <th scope="row">{{i+1}}</th>
+              <ng-template #nonEditTmpl>
+                <td>
+                  {{order?.name}}
+                <td>
+                 {{order?.description}}
+                </td>
+                <td>
+                  {{order?.category}}
+                </td>
+                <td>
+                  {{order?.brand}}
+                </td>
+                <td>
+                  {{order?.model}}
+                </td>
+                <td>
+                  {{order?.qty}}
+                </td>
+                <td>
+                  {{order?.mrp}}
+                </td>
+              </ng-template>
+              <ng-container *ngIf="order.allowEdit else nonEditTmpl">
+                <td>
+                  <input  type="text"
+                             formControlName="name"
+                             >
+                </td>
+                <td>
+                 <input  type="text"
+                             formControlName="description"
+                             >
+                </td>
+                <td>
+                  <input  type="text"
+                             formControlName="category"
+                             >
+                </td>
+                <td>
+                  <input  type="text"
+                             formControlName="brand"
+                             >
+                </td>
+                <td>
+                  <input  type="text"
+                             formControlName="model"
+                             >
+                </td>
+                <td>
+                  <input  type="text"
+                             formControlName="qty"
+                             >
+                </td>
+                <td>
+                  <input  type="text"
+                             formControlName="mrp"
+                             >
+                </td>
+              </ng-container>
+              <td>
+                <button type="button" *ngIf="!order.allowEdit" class='fa fa-edit mr-auto' (click)="editOrder(i)"></button>
+                <button type="button" *ngIf="order.allowEdit" (click)="afterEditOrder(i)">Done</button>
+                <button type="button"  class='fa fa-times ml-auto' (click)="deleteOrder(i)"></button>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
